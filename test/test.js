@@ -4,7 +4,7 @@ import Joi from 'joi';
 
 describe('@MomsFriendlyDevCo/Joyful', ()=> {
 
-	it('joyful(data, checks)', ()=> {
+	it('joyful(state:Object, checks:Object|Function)', ()=> {
 		let chk;
 
 		// Full wrapper
@@ -18,7 +18,7 @@ describe('@MomsFriendlyDevCo/Joyful', ()=> {
 		expect(chk()).to.equal(true);
 	});
 
-	it('joyful(joi => checks)', ()=> {
+	it('joyful(state:Object, joi => checks:Object)', ()=> {
 		let chk;
 
 		// Use callback provided joi
@@ -35,6 +35,32 @@ describe('@MomsFriendlyDevCo/Joyful', ()=> {
 		expect(chk()).to.equal(true);
 
 		chk = ()=> joyful({}, joi => ({foo: joi.string().required()}));
+		expect(chk).to.throw();
+	});
+
+	it('joyful(state:Object, Array<Object|Function<Object>>)', ()=> {
+		let chk;
+
+		// Use callback provided joi
+		chk = ()=> joyful(
+			{foo: 'Foo!'},
+			[
+				joi => ({foo: joi.string().required()}),
+				joi => ({bar: joi.number()}),
+			],
+		);
+		expect(chk).to.not.throw();
+		expect(chk()).to.equal(true);
+
+		chk = ()=> joyful({}, joi => [{}, {foo: joi.string.required()}]);
+		expect(chk).to.throw();
+
+		// POJO instead of Joi.object()
+		chk = ()=> joyful({foo: 'Foo!'}, [{}, joi => ({foo: joi.string().required()})]);
+		expect(chk).to.not.throw();
+		expect(chk()).to.equal(true);
+
+		chk = ()=> joyful({}, [{}, joi => ({foo: joi.string().required()}), {}]);
 		expect(chk).to.throw();
 	});
 

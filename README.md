@@ -10,19 +10,6 @@ Why?
 * *Throw by default* - Validation failures throw (configurable) by default without needing to examine the result and pick apart if an error occurred
 
 
-This library exposes a simple function `joyful(data, schema, options)` which accepts:
-
-* _data_ - The input data to validate
-* _schema_ - A `Joi.Object()`, A [POJO](https://www.wikiwand.com/en/Plain_Old_Java_Object) or a function which can return either
-* _options_ - Additional options to change the functions behaviour
-
-Options are:
-
-| Option  | Type      | Default | Description                                                                                                 |
-|---------|-----------|---------|-------------------------------------------------------------------------------------------------------------|
-| `throw` | `Boolean` | `true`  | Throw an error if validation fails, otherwise the return value will be the string contents that would throw |
-
-
 Examples
 --------
 
@@ -62,3 +49,26 @@ joyful(
     {foo: Joi.string().required()},
 ); //= true
 ```
+
+
+API
+===
+
+joyful(data, schema, options)
+=============================
+This library exposes a simple function `joyful(data, schema, options)` which accepts:
+
+* _data_ - The input data to validate
+* _schema_ - A `Joi.Object()`, A [POJO](https://www.wikiwand.com/en/Plain_Old_Java_Object) or a function which can return either. Can also be an array of any of these which are merged in order
+* _options_ - Additional options to change the functions behaviour
+
+Options are:
+
+| Option  | Type      | Default | Description                                                                                                 |
+|---------|-----------|---------|-------------------------------------------------------------------------------------------------------------|
+| `throw` | `Boolean` | `true`  | Throw an error if validation fails, otherwise the return value will be the string contents that would throw |
+
+
+joyful.joi
+----------
+`joi` instance.
