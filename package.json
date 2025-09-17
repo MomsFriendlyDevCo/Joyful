@@ -28,10 +28,14 @@
   "engines": {
     "node": ">=16.14.0"
   },
+  "dependencies": {
+    "joi": "^18.0.1",
+    "lodash-es": "^4.17.21"
+  },
   "devDependencies": {
     "@momsfriendlydevco/eslint-config": "^2.3.1",
-    "chai": "^4.3.7",
+    "chai": "^6.0.1",
     "eslint": "^9.35.0",
-    "mocha": "^10.1.0"
+    "mocha": "^11.7.2"
   }
 }
