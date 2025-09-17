@@ -56,7 +56,7 @@ export function compile(schema, options = {}) {
 			)
 
 		if (settings.validate) {
-			if (schemasToMerge.some(s =>
+			if (schemasToMerge.some(s => // eslint-disable-line unicorn/no-lonely-if
 				!isPlainObject(s)
 			)) throw new Error(`Only POJO member items allowed when providing an array of schemas to Joyful`);
 		}
