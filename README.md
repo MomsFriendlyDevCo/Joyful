@@ -54,11 +54,12 @@ joyful(
 API
 ===
 
-joyful(data, schema, options)
-=============================
-This library exposes a simple function `joyful(data, schema, options)` which accepts:
+joyful(state, schema, options)
+-----------------------------
+Default function export.
+This library exposes a simple function `joyful(state, schema, options)` which accepts:
 
-* _data_ - The input data to validate
+* _state_ - The input state to validate
 * _schema_ - A `Joi.Object()`, A [POJO](https://www.wikiwand.com/en/Plain_Old_Java_Object) or a function which can return either. Can also be an array of any of these which are merged in order
 * _options_ - Additional options to change the functions behaviour
 
@@ -69,6 +70,24 @@ Options are:
 | `throw` | `Boolean` | `true`  | Throw an error if validation fails, otherwise the return value will be the string contents that would throw |
 
 
-joyful.joi
-----------
+compile(schema, options)
+------------------------
+Function export.
+Return a compiled Joi schema from the "lazy" input schema along with options.
+
+| Option                | Type      | Default | Description                  |
+|-----------------------|-----------|---------|------------------------------|
+| `options.wrapObjects` | `Boolean` | `true`  | Wrap POJOs in `Joi.object()` |
+
+
+validate(state, schame, options)
+--------------------------------
+Function export.
+Utility function which throws if the given state does not conform to the specified schema.
+This is really just a utilty function of `joyful(state, schema, {throws: true})`
+
+
+joi
+---
+Object export.
 `joi` instance.

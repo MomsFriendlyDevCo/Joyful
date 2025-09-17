@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import joyful from '../src/joyful.js';
+import joyful, {validate} from '../src/joyful.js';
 import Joi from 'joi';
 
 describe('@MomsFriendlyDevCo/Joyful', ()=> {
@@ -62,6 +62,25 @@ describe('@MomsFriendlyDevCo/Joyful', ()=> {
 
 		chk = ()=> joyful({}, [{}, joi => ({foo: joi.string().required()}), {}]);
 		expect(chk).to.throw();
+	});
+
+	it('validate(state:Object, checks:Object) - positive validation', ()=> {
+		validate({str: 'Hello'}, joi => ({str: joi.string()}));
+		validate({num: 123}, joi => ({num: joi.number().min(0).max(1000)}));
+	});
+
+	it('validate(state:Object, checks:Object) - invalid validation', ()=> {
+		expect(()=> {
+			validate({str: 123}, joi => ({str: joi.string()}));
+		}).to.throw;
+
+		expect(()=> {
+			validate({num: '123'}, joi => ({num: joi.number().min(0).max(1000)}));
+		});
+
+		expect(()=> {
+			validate({num: 100_000}, joi => ({num: joi.number().min(0).max(1000)}));
+		});
 	});
 
 });

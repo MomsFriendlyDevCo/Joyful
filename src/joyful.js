@@ -5,7 +5,7 @@ import Joi from 'joi';
 * Validate incoming state against a schema, throwing if the schema is invalid
 *
 * @param {Object} state The incoming data object to validate
-* @param {JoiObject|Object|Function} The schema to validate against, if a POJO it will be converted first. If this is a function it is called as `(Joi)` and expected to return a JoiObject or POJO
+* @param {JoiObject|Object|Function} schema The schema to validate against, if a POJO it will be converted first. If this is a function it is called as `(Joi)` and expected to return a JoiObject or POJO
 *
 * @param {Object} [options] Additional options to mutate behaviour
 * @param {Boolean} [options.throw=true] Throw an error if validation fails, otherwise the return value will be the string contents that would throw
@@ -80,5 +80,26 @@ export function compile(schema, options = {}) {
 	: settings.wrapObjects ? Joi.object(schema)
 	: schema;
 }
+
+
+/**
+* Wrapped version of Joyful which silently validate a state against a schema or throws if the state is invalid
+* This is really just a utilty function of `joyful(state, schema, {throws: true})`
+*
+* @param {Object} state The incoming data object to validate
+* @param {JoiObject|Object|Function} schema The schema to validate against, if a POJO it will be converted first. If this is a function it is called as `(Joi)` and expected to return a JoiObject or POJO
+*
+* @param {Object} [options] Additional options to mutate behaviour
+* @param {Boolean} [options.throw=true] Throw an error if validation fails, otherwise the return value will be the string contents that would throw
+*
+* @returns {void} Silently returns if validation passes, otherwise will throw
+*/
+export function validate(state, schema, options) {
+	joyful(state, schema, {
+		throw: true,
+		...options,
+	});
+}
+
 
 export let joi;
