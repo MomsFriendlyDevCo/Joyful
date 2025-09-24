@@ -65,9 +65,11 @@ This library exposes a simple function `joyful(state, schema, options)` which ac
 
 Options are:
 
-| Option  | Type      | Default | Description                                                                                                 |
-|---------|-----------|---------|-------------------------------------------------------------------------------------------------------------|
-| `throw` | `Boolean` | `true`  | Throw an error if validation fails, otherwise the return value will be the string contents that would throw |
+| Option     | Type      | Default | Description                                                                                                 |
+|------------|-----------|---------|-------------------------------------------------------------------------------------------------------------|
+| `populate` | `Boolean` | `false` | Return the populated object along with defaults rather than void                                            |
+| `throw`    | `Boolean` | `true`  | Throw an error if validation fails, otherwise the return value will be the string contents that would throw |
+| `trim`     | `Boolean` | `true`  | Remove non-schema keys from the input before validating (or returning if `populate=true`)                   |
 
 
 compile(schema, options)
@@ -80,11 +82,19 @@ Return a compiled Joi schema from the "lazy" input schema along with options.
 | `options.wrapObjects` | `Boolean` | `true`  | Wrap POJOs in `Joi.object()` |
 
 
-validate(state, schame, options)
+validate(state, schama, options)
 --------------------------------
 Function export.
 Utility function which throws if the given state does not conform to the specified schema.
 This is really just a utilty function of `joyful(state, schema, {throws: true})`
+
+
+applyOptions(state, schema, options)
+------------------------------------
+Function export. Returns an object.
+Wrapped version of Joyful which will validate an options object, apply defaults and return the valid result
+If validation fails this function will throw
+This is really just a utilty function of `joyful(state, schema, {populate: true, trim: true, throws: true})`
 
 
 joi
